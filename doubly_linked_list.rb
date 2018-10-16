@@ -49,6 +49,19 @@ class DoublyLinkedList
       puts 'Target node not found'
     end
   end
+
+  def append_before(target, value)
+    new_node = Node.new(value)
+    if target_node = find(target)
+      new_node.next = target_node
+      new_node.prev = target_node.prev
+      target_node.prev = new_node
+      new_node.prev.next = new_node
+    else
+      puts 'Target node not found'
+    end
+  end
+  
   
   def find(value)
     node = @head
@@ -74,7 +87,7 @@ class DoublyLinkedList
     if node
       printable_string = "()[#{node.value}](#{node.next&.value})"
       while node = node.next
-        printable_string << " -> (#{node.prev&.value})[#{node.value}](#{node.next&.value})"
+        printable_string << " <-> (#{node.prev&.value})[#{node.value}](#{node.next&.value})"
       end
     else
       puts 'Emply Doubly Linked List'
