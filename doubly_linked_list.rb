@@ -27,6 +27,40 @@ class DoublyLinkedList
     end
   end
 
+  def prepend(value)
+    node = Node.new(value)
+    if @head
+      @head.prev = node
+      node.next = @head
+      @head = node
+    else
+      @head = node
+    end
+  end
+
+  def append_after(target, value)
+    new_node = Node.new(value)
+    if target_node = find(target)
+      new_node.next = target_node.next
+      target_node.next.prev = new_node if target_node.next
+      target_node.next = new_node
+      new_node.prev = target_node
+    else
+      puts 'Target node not found'
+    end
+  end
+  
+  def find(value)
+    node = @head
+    return node if node.value == value
+    return false if !node.next
+    while node = node.next
+      return node if node.value == value
+    end
+    false
+  end
+  
+  
   def find_tail
     node = @head
     return node if !node.next
