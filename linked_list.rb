@@ -28,6 +28,11 @@ class LinkedList
     end
   end
 
+  def get_head
+    @head.value
+  end
+  
+
   def find_tail
     node = @head
     return node if !node.next
@@ -76,11 +81,15 @@ class LinkedList
 
   def print
     node = @head
-    to_be_printed = "#{node.value} "
-    while(node = node.next)
-      to_be_printed << "-> #{node.value}"
+    if node
+      to_be_printed = "#{node.value} "
+      while(node = node.next)
+        to_be_printed << " -> #{node.value}"
+      end
+      puts to_be_printed
+    else
+      puts 'Empty Linked list'
     end
-    puts to_be_printed
   end
 
   def size
@@ -91,5 +100,12 @@ class LinkedList
       length += 1
     end
     length
+  end
+
+  def delete_list
+    node = @head
+    while node = node.next
+      @head = node.next
+    end
   end
 end
