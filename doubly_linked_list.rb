@@ -62,7 +62,6 @@ class DoublyLinkedList
     end
   end
   
-  
   def find(value)
     node = @head
     return node if node.value == value
@@ -73,7 +72,6 @@ class DoublyLinkedList
     false
   end
   
-  
   def find_tail
     node = @head
     return node if !node.next
@@ -81,6 +79,23 @@ class DoublyLinkedList
       return node if !node.next
     end
   end
+
+  def delete_head
+    @head = @head.next
+    @head.prev = nil
+  end
+
+  def delete_tail
+    tail = find_tail
+    tail.prev.next = nil
+  end
+  
+  def delete(value)
+    node = find(value)
+    node.prev.next = node.next if node.prev
+    node.next.prev = node.prev if node.next
+  end
+  
   
   def print
     node = @head
@@ -95,3 +110,28 @@ class DoublyLinkedList
     puts printable_string
   end
 end
+
+a = DoublyLinkedList.new
+puts '--- appending nodes(2,3,4) -----'
+a.append(2)
+a.append(3)
+a.append(4)
+a.print
+puts '--- prepend node(1) -----'
+a.prepend(1)
+a.print
+puts '--- append_after(target=3, value=5) -----'
+a.append_after(3, 5)
+a.print
+puts '--- append_before(target=3, value=5) -----'
+a.append_before(3, 5)
+a.print
+puts '--- deleting head -----'
+a.delete_head
+a.print
+puts '--- deleting tail -----'
+a.delete_tail
+a.print
+puts '--- deleting node(3) -----'
+a.delete(3)
+a.print
