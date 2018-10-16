@@ -86,6 +86,24 @@ class CircularLinkedList
         printable_string << " -> #{@current.value}"
       end
     end  
-  end
+  end 
   
+  def delete_last
+    @current = @head
+    return false unless @current.next
+    while @current = @current.next
+      if @current.next.next == @head
+        @current.next = @head 
+        return false
+      end  
+    end    
+  end
+
+  def delete_head
+    
+  end
+
+  def delete(value)
+    
+  end
 end
