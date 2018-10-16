@@ -32,6 +32,40 @@ class CircularLinkedList
     end
   end
 
+  def prepend(value)
+    node = Node.new(value)
+    if @head
+      tail = find_tail
+      tail.next = node
+      node.next = @head
+      @head = node
+    else
+      @head = node
+      @current = node
+    end
+  end
+  
+  def append_after(target, value)
+    node = Node.new(value)
+    target_node = find(target)
+    if target_node
+      node.next = target_node.next
+      target_node.next = node      
+    else
+      puts 'Target not found'
+    end 
+  end
+
+  def find(value)
+    node = @head
+    node = @current
+    return @current if @current.value == value
+    while @current = @current.next
+      return @current if @current.value == value
+      return false if @current == @head
+    end
+  end
+  
   def find_tail
     @current = @head
     return @current unless @current.next
