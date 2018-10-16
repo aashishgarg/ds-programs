@@ -28,11 +28,6 @@ class LinkedList
     end
   end
 
-  def get_head
-    @head.value
-  end
-  
-
   def find_tail
     node = @head
     return node if !node.next
@@ -93,6 +88,7 @@ class LinkedList
   end
 
   def size
+    return 0 if @head.nil?
     node = @head
     length = 0
     return 1 if !node.next
@@ -103,9 +99,10 @@ class LinkedList
   end
 
   def delete_list
-    node = @head
-    while node = node.next
-      @head = node.next
-    end
+    @head = nil
+    # node = @head
+    # while node = node.next
+    #   @head = node.next
+    # end
   end
 end
