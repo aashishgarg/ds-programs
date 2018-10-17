@@ -23,7 +23,6 @@ class Stack
     node.next = @head unless @head.nil?
     @head = node
     @length += 1
-    print
   end
 
   def pop
@@ -34,7 +33,6 @@ class Stack
     else
       raise 'StackUnderflow'
     end
-    print
     popped.value
   end
 
