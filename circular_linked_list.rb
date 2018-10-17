@@ -100,10 +100,19 @@ class CircularLinkedList
   end
 
   def delete_head
-    
+    next_to_head = @head.next
+    find_tail.next = next_to_head
+    @head = next_to_head
   end
 
   def delete(value)
-    
+    node = @head
+    @current = node
+    while @current = @current.next
+      if @current.next.value == value
+        @current.next = @current.next.next
+        return false
+      end
+    end  
   end
 end
