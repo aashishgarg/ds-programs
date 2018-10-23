@@ -1,4 +1,4 @@
-require_relative '../programs/singly_linked_list.rb'
+require_relative '../programs/linked_list/singly_linked_list.rb'
 
 class QueueWithLinkedList
     attr_accessor :front, :rear, :length, :linked_list
