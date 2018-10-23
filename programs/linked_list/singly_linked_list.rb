@@ -50,7 +50,7 @@ class LinkedList
       return
     end
     node = find_before(value)
-    node.next = node.next.next
+    node.next = node.next.next if node
   end
 
   def find(value)
@@ -66,7 +66,7 @@ class LinkedList
 
   def find_before(value)
     node = @head
-    return false if !node.next
+    return if !node.next
     return @head if @head.next.value == value
 
     while(node = node.next)
@@ -90,8 +90,7 @@ class LinkedList
   def size
     return 0 if @head.nil?
     node = @head
-    length = 0
-    return 1 if !node.next
+    length = 1
     while(node = node.next)
       length += 1
     end

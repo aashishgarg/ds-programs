@@ -4,7 +4,7 @@
   Expression - (A+B)+(C-D))    Result - "Not Balanced" 
 =end
 
-require_relative '../programs/stack_with_linked_list.rb'
+require_relative '../programs/stack/stack_with_linked_list.rb'
 
 module Problem
   class SymbolBalance
