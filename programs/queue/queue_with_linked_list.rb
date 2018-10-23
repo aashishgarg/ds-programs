@@ -1,4 +1,4 @@
-require_relative '../programs/linked_list/singly_linked_list.rb'
+require_relative '../linked_list/singly_linked_list.rb'
 
 class QueueWithLinkedList
     attr_accessor :front, :rear, :length, :linked_list
@@ -38,5 +38,9 @@ class QueueWithLinkedList
   
     def print
       @linked_list.print
+    end
+    
+    def isEmpty?
+      @length == 0
     end  
   end
