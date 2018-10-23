@@ -1,3 +1,5 @@
+require_relative '../exceptions/exceptions.rb'
+
 class Stack
   attr_accessor :top, :size
 
@@ -9,7 +11,7 @@ class Stack
 
   def push(item)
     if @top == @size - 1
-      raise 'StackOverflow'
+      raise StackOverflow.new('There is no space left with stack to fill in!')
     else
       @top += 1
       @array[top] = item
@@ -19,7 +21,7 @@ class Stack
 
   def pop
     if @top == -1
-      raise 'StackUnderflow'
+      raise StackUnderflow.new('There is nothing in stack to pop from!')
     else
       item = @array.delete_at(@top)
       @top -= 1

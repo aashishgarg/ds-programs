@@ -2,6 +2,8 @@
 Push operation is implemented by inserting element at the beginning of the list. 
 Pop operation is implemented by deleting the node from the beginning (the header/top node).
 =end
+require_relative '../exceptions/exceptions.rb'
+
 class Node
   attr_accessor :value, :next
   def initialize(value)
@@ -31,7 +33,7 @@ class Stack
       @head = @head.next
       @length -= 1
     else
-      raise 'StackUnderflow'
+      raise StackUnderflow.new('There is nothing in stack to pop from!')
     end
     popped.value
   end

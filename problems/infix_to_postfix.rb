@@ -1,7 +1,7 @@
 =begin
-  *Problem* - How stacks can be used for checking balancing of symbols.
-  Expression - (A+B)+(C-D)     Result - "Balanced"
-  Expression - (A+B)+(C-D))    Result - "Not Balanced" 
+  *Problem* - Infix to postfix conversion algorithm using stack.
+  Postfix notation (also known as "Reverse Polish notation"): X Y +
+  Prefix notation (also known as "Polish notation"): + X Y
 =end
 
 require_relative '../programs/stack_with_linked_list.rb'
