@@ -302,4 +302,23 @@ class BinaryTree
       q.enqueue(node.right) if node.right
     end
   end
+
+  # Give an algorithm for finding the number of leaves in the binary tree without using recursion
+  def leaves_count(root)
+    if root.nil?
+      puts 'Empty tree'
+      return
+    end
+    return 1 if (!root.left && !root.right)
+    leaves_count = 0
+    queue = QueueWithLinkedList.new
+    queue.enqueue(root)
+    while !queue.isEmpty?
+      node = queue.dequeue
+      leaves_count += 1 if !node.left && !node.right
+      queue.enqueue(node.left) if node.left
+      queue.enqueue(node.right) if node.right
+    end
+    leaves_count
+  end
 end
