@@ -253,5 +253,5 @@ class BinaryTree
       q.enqueue(node.right) if node.right
     end
     node.data
-  end  
+  end
 end
