@@ -19,6 +19,9 @@ class BinaryTree
     @root.left, @root.right = BinaryTreeNode.new(2), BinaryTreeNode.new(3)
     @root.left.left, @root.left.right = BinaryTreeNode.new(4), BinaryTreeNode.new(5)
     @root.right.left, @root.right.right = BinaryTreeNode.new(6), BinaryTreeNode.new(7)
+    @root.left.left.left, @root.left.left.right = BinaryTreeNode.new(8), BinaryTreeNode.new(9)
+    @root.left.right.left, @root.left.right.right = BinaryTreeNode.new(10), BinaryTreeNode.new(11)
+    @root.left.left.left.left, @root.left.left.left.right = BinaryTreeNode.new(12), BinaryTreeNode.new(13)
   end
   
   def preOrder(root)
@@ -202,11 +205,53 @@ class BinaryTree
   end
 
   # Give an algorithm for deleting the tree.
-  # Sol - To delete a tree, we must traverse all the nodes of the tree and delete them one by one.
+  # To delete a tree, we must traverse all the nodes of the tree and delete them one by one.
   # Before deleting the parent node we should delete its children nodes first.
   def delete_tree
     @root = nil # In ruby it will be taken care by garbage collector
   end
 
-  def 
+  # Give an algorithm for finding the height (or depth) of the binary tree.
+  # Depth of the binary tree is the length of the longest path from this node to a leaf. 
+  # Depth of the binary tree with no descendents is zero.
+  def height_with_recursion(root)
+    return 0 unless root
+    leftDepth = height_with_recursion(root.left)
+    rightDepth = height_with_recursion(root.right)
+    (leftDepth > rightDepth) ? leftDepth + 1 : rightDepth + 1
+  end
+
+  def min_heigh
+    return 0 unless @root
+    q = QueueWithLinkedList.new
+    q.enqueue(@root)
+    q.enqueue(nil)
+    height = 1
+    while !q.isEmpty?
+      node = q.dequeue
+      if node
+        puts "--- #{node.data} -----#{height}------"
+        return height if (!node.left && !node.right)
+        q.enqueue(node.left) if node.left
+        q.enqueue(node.right) if node.right  
+      else
+        height += 1
+        q.enqueue(nil)
+      end
+    end
+    height
+  end
+
+  def deepest_node
+    puts 'Empty tree' and return unless @root
+    q = QueueWithLinkedList.new
+    q.enqueue(@root)
+    node = @root
+    while !q.isEmpty?
+      node = q.dequeue
+      q.enqueue(node.left) if node.left
+      q.enqueue(node.right) if node.right
+    end
+    node.data
+  end  
 end
