@@ -23,12 +23,12 @@ class BinaryTree
     @root.left.right.left, @root.left.right.right = BinaryTreeNode.new(10), BinaryTreeNode.new(11)
     @root.left.left.left.left, @root.left.left.left.right = BinaryTreeNode.new(12), BinaryTreeNode.new(13)
   end
-  
+
   def preOrder(root)
     if root
       puts root.data
       preOrder(root.left)
-      preOrder(root.right)  
+      preOrder(root.right)
     end
   end
 
@@ -36,14 +36,14 @@ class BinaryTree
     if root
       inOrder(root.left)
       puts root.data
-      inOrder(root.right)  
+      inOrder(root.right)
     end
   end
 
   def postOrder(root)
     if root
       postOrder(root.left)
-      postOrder(root.right)  
+      postOrder(root.right)
       puts root.data
     end
   end
@@ -66,13 +66,13 @@ class BinaryTree
     end
     arr
   end
-  
+
   def inOrderWithIteration(root)
     arr = []
     stack = Stack.new
     current = root
     done = false
-    while(!done)
+    while (!done)
       if current
         stack.push(current)
         current = current.left
@@ -82,11 +82,11 @@ class BinaryTree
         else
           current = stack.pop
           arr << current.data
-          current = current.right  
-        end  
-      end  
+          current = current.right
+        end
+      end
     end
-    arr 
+    arr
   end
 
   def levelOrderTraversal
@@ -115,7 +115,7 @@ class BinaryTree
       end
       if root.data > max
         max = root.data
-      end  
+      end
     end
     max
   end
@@ -134,11 +134,11 @@ class BinaryTree
     end
     return max
   end
-  
+
   # Give an algorithm for searching an element in binary tree.
   def find(root, data)
     return false unless root
-    return true if root.data == data
+    return root if root.data == data
     return find(root.left, data) || find(root.right, data)
   end
 
@@ -233,7 +233,7 @@ class BinaryTree
         puts "--- #{node.data} -----#{height}------"
         return height if (!node.left && !node.right)
         q.enqueue(node.left) if node.left
-        q.enqueue(node.right) if node.right  
+        q.enqueue(node.right) if node.right
       else
         height += 1
         q.enqueue(nil)
@@ -253,5 +253,26 @@ class BinaryTree
       q.enqueue(node.right) if node.right
     end
     node.data
+  end
+
+  # Give an algorithm for deleting an element (assuming data is given) from binary tree
+  # Solution: The deletion of a node in binary tree can be implemented as
+  # 1. Starting at root, find the node which we want to delete.
+  # 2. Find the deepest node in the tree.
+  # 3. Replace the deepest node’s data with node to be deleted.
+  # 4. Then delete the deepest node.
+  def delete(data)
+    node = find(@root, data)
+    remove_node(node) if node
+  end
+
+  def remove_node(node)
+    node = if node.left && node.right
+             nil
+           elsif !node.left && node.right
+             node.right
+           elsif node.left && !node.right
+             node.left
+           end
   end
 end
