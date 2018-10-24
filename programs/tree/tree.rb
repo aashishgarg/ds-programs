@@ -21,7 +21,7 @@ class BinaryTree
     @root.right.left, @root.right.right = BinaryTreeNode.new(6), BinaryTreeNode.new(7)
     @root.left.left.left, @root.left.left.right = BinaryTreeNode.new(8), BinaryTreeNode.new(9)
     @root.left.right.left, @root.left.right.right = BinaryTreeNode.new(10), BinaryTreeNode.new(11)
-    @root.left.left.left.left, @root.left.left.left.right = BinaryTreeNode.new(12), BinaryTreeNode.new(13)
+    @root.left.left.right.left, @root.left.left.right.right = BinaryTreeNode.new(12), BinaryTreeNode.new(13)
   end
 
   def preOrder(root)
@@ -144,7 +144,7 @@ class BinaryTree
 
   # Give an algorithm for searching an element in binary tree without recursion.
   def find_without_recursion(data)
-    puts 'Queue id empty' and return if @root.nil?
+    puts 'Tree is empty' and return if @root.nil?
     q = QueueWithLinkedList.new
     q.enqueue(@root)
     found = false
@@ -221,7 +221,7 @@ class BinaryTree
     (leftDepth > rightDepth) ? leftDepth + 1 : rightDepth + 1
   end
 
-  def min_heigh
+  def min_height
     return 0 unless @root
     q = QueueWithLinkedList.new
     q.enqueue(@root)
@@ -242,17 +242,20 @@ class BinaryTree
     height
   end
 
-  def deepest_node
-    puts 'Empty tree' and return unless @root
+  def deepest_node(root)
+    if root.nil?
+      puts 'Empty Tree'
+      return
+    end
     q = QueueWithLinkedList.new
-    q.enqueue(@root)
-    node = @root
+    q.enqueue(root)
+    node = root
     while !q.isEmpty?
       node = q.dequeue
       q.enqueue(node.left) if node.left
       q.enqueue(node.right) if node.right
     end
-    node.data
+    node
   end
 
   # Give an algorithm for deleting an element (assuming data is given) from binary tree
@@ -267,12 +270,36 @@ class BinaryTree
   end
 
   def remove_node(node)
-    node = if node.left && node.right
-             nil
-           elsif !node.left && node.right
-             node.right
-           elsif node.left && !node.right
-             node.left
-           end
+    parent = parent(node.data)
+    if !node.left && !node.right
+      parent.left = nil if parent.left == node
+      parent.right = nil if parent.right == node
+    elsif !node.left && node.right
+      parent.left = node.right if parent.left == node
+      parent.right = node.right if parent.right == node
+    elsif node.left && !node.right
+      parent.left = node.left if parent.left == node
+      parent.right = node.left if parent.right == node
+    else
+      deepest_node = deepest_node(node)
+      deepest_node_parent = parent(deepest_node.data)
+      node.data = deepest_node.data
+      deepest_node_parent.left = nil if deepest_node_parent.left == deepest_node
+      deepest_node_parent.right = nil if deepest_node_parent.right == deepest_node
+    end
+  end
+
+  def parent(data)
+    puts 'Tree is empty' and return if @root.nil?
+    q = QueueWithLinkedList.new
+    q.enqueue(@root)
+    puts 'Root Node provided' and return if @root.data == data
+    while !q.isEmpty?
+      node = q.dequeue
+      parent = node if (node.left&.data == data || node.right&.data == data)
+      return parent if parent
+      q.enqueue(node.left) if node.left
+      q.enqueue(node.right) if node.right
+    end
   end
 end
