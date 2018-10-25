@@ -133,4 +133,37 @@ class BinarySearchTree
     end
     root
   end
+
+  # Problem -
+  # 1. Given pointers to two nodes in a binary search tree, find the lowest common ancestor (LCA).
+  # 2. Give an algorithm for finding the shortest path between two nodes in a BST.(It’s nothing but finding the LCA of
+  #    two nodes in BST.)
+
+  # The main idea of the solution is: while traversing BST from root to bottom, the first node we encounter with value
+  # between α and β, i.e., α < node → data < β, is the Least Common Ancestor(LCA) of α and β (where α < β).
+  # So just traverse the BST in pre-order, and if we find a node with value in between α and β,
+  # then that node is the LCA. If its value is greater than both α and β, then the LCA lies on the left side of the node,
+  # and if its value is smaller than both a and β, then the LCA lies on the right side.
+  def lca(root, node1, node2)
+    return root if root.nil?
+    return root if node1 == root || node2 == root
+    if node1.data < root.data && node2.data < root.data
+      return lca(root.left, node1, node2)
+    elsif node1.data > root.data && node2.data > root.data
+      return lca(root.right, node1, node2)
+    else
+      return root
+    end
+  end
+
+  # For each node, check if max value in left subtree is smaller than the current node data and min value in right
+  # subtree greater than the node data.
+
+  def bst?(root)
+    return true if root.nil?
+    return false if !root.left.nil? && (maximum(root.left).data > root.data)
+    return false if !root.right.nil? && (minimum(root.right).data < root.data)
+    return false if !bst?(root.left) || !bst?(root.right)
+    true
+  end
 end
