@@ -88,6 +88,8 @@ class BinarySearchTree
   end
 
   # To insert data into binary search tree, first we need to find the location for that element without recursion.
+  # after inserting an element in subtrees, the tree is returned to its parent. As a result, the complete tree will
+  # get updated.
   def insert(root, data)
     if root.nil?
       root = BinarySearchTreeNode.new(data)
@@ -102,13 +104,32 @@ class BinarySearchTree
     root
   end
 
-  # To insert data into binary search tree, first we need to find the location for that element with recursion.
-  def insert_without_recursion(root, data)
-    if root.nil?
-      root = BinarySearchTreeNode.new(data)
-      root.left, root.right = nil, nil
+  # 1. First we need to find the location of the element which we want to delete.
+  # 2. If the element to be deleted is a leaf node: return NULL to its parent.
+  # 3. If the element to be deleted has one child: In this case we just need to send the current node’s child to its
+  #    parent
+  # 4. If the element to be deleted has both children: The general strategy is to replace the key of this node with the
+  #    largest element of the left subtree and recursively delete that node (which is now empty). The largest node in the
+  #    left subtree cannot have a right child
+  def delete(root, data)
+    return if root.nil?
+    if data < root.data
+      root.left = delete(root.left, data)
+    elsif data > root.data
+      root.right = delete(root.right, data)
     else
-      
+      # ----- node found ----- #
+      if !root.left && !root.right
+        root = nil
+      elsif root.left && !root.right
+        root = root.right
+      elsif !root.left && root.right
+        root = root.left
+      else
+        new_data = maximum(root.left).data
+        root.data = new_data
+        root.left = delete(root.left, root.data)
+      end
     end
     root
   end
