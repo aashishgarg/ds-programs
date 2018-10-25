@@ -1,18 +1,22 @@
 require_relative '../stack/stack_with_linked_list.rb'
-require '/home/ashish/workspace/personal/ds-programs/programs/queue/queue_with_linked_list.rb'
+require_relative '../queue/queue_with_linked_list.rb'
 
 class BinaryTreeNode
   attr_accessor :data, :left, :right
 
   def initialize(data)
     @data = data
-    left = nil
-    right = nil
+    @left = nil
+    @right = nil
   end
 end
 
 class BinaryTree
   attr_accessor :root
+
+  def initialize
+    @root = nil
+  end
 
   def create
     @root = BinaryTreeNode.new(1)
