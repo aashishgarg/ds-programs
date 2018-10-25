@@ -321,4 +321,43 @@ class BinaryTree
     end
     leaves_count
   end
+
+  # Give an algorithm for finding the number of full nodes in the binary tree without using recursion.
+  def full_nodes_count(root)
+    if root.nil?
+      puts 'Empty tree'
+      return
+    end
+    full_nodes_count = 0
+    queue = QueueWithLinkedList.new
+    queue.enqueue(root)
+    while !queue.isEmpty?
+      node = queue.dequeue
+      full_nodes_count += 1 if node.left && node.right
+      queue.enqueue(node.left) if node.left
+      queue.enqueue(node.right) if node.right
+    end
+    full_nodes_count
+  end
+
+  # Give an algorithm for finding the number of half nodes (nodes with only one child) in the binary tree
+  # without using recursion.
+  def half_nodes_count(root)
+    if root.nil?
+      puts 'Empty tree'
+      return
+    end
+    half_nodes_count = 0
+    queue = QueueWithLinkedList.new
+    queue.enqueue(root)
+    while !queue.isEmpty?
+      node = queue.dequeue
+      half_nodes_count += 1 if ((node.left && !node.right) || (!node.left && node.right))
+      queue.enqueue(node.left) if node.left
+      queue.enqueue(node.right) if node.right
+    end
+    half_nodes_count
+  end
+
+
 end
