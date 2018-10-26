@@ -1,3 +1,10 @@
+# Binary Tree - Nodes have 0 to 2 children
+# Strict binary tree - All nodes have exactly 0 or 2 nodes.
+# Full binary tree - All nodes have 2 nodes and all leaf nodes are at same level.
+# Complete binary tree - If all leaf nodes are at height h or h-1. if we give numbering for the nodes by starting
+#                       at the root (let us say the root node has 1) then we get a complete sequence from 1 to the
+#                       number of nodes in the tree. While traversing we should give numbering for NULL pointers
+#                       also.
 require_relative '../stack/stack_with_linked_list.rb'
 require_relative '../queue/queue_with_linked_list.rb'
 

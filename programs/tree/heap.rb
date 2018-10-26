@@ -1,0 +1,97 @@
+#                 ________________
+# Example Max Heap - |17|13|6|1|4|2|5|
+#                -----------------
+# Heap is a complete binary tree where all leaf nodes are at height h or h-1.
+class Heap
+  attr_accessor :heap_type, :count, :capacity, :array
+
+  def initialize(capacity, heap_type)
+    @capacity = capacity
+    @heap_type = heap_type
+    @array = Array.new(capacity)
+    @count = @array.size
+  end
+
+  def count
+    @array.size
+  end
+
+  def create
+    @array = [31, 10, 21, 9, 8, 12, 18, 3, 2, 1, 7]
+    @count = @array.size
+    @array
+  end
+
+  def create_invalid
+    @array = [31, 1, 21, 9, 10, 12, 18, 3, 2, 8, 7]
+    @count = @array.size
+    @array
+  end
+
+  # For a node at ith location, its parent is at (i-1)/2 location
+  def parent(node_index)
+    return -1 if (node_index < 0) || (node_index > @count)
+    return (node_index - 1)/2
+  end
+
+  # for a node at ith location, its children are at (2 * i + 1) and (2 * i + 2) locations
+  # left child location - (2 * i + 1)
+  def left_child(parent_index)
+    left = 2 * parent_index + 1
+    return -1 if left > @count
+    left
+  end
+
+  # right child location - (2 * i + 2)
+  def right_child(parent_index)
+    right = 2 * parent_index + 2
+    return -1 if right > @count
+    right
+  end
+
+  # Getting the Maximum Element
+  # Since the maximum element in max heap is always at root, it will be stored at this.array[0].
+  def max
+    return -1 if @count == 0
+    return @array[0]
+  end
+
+  # Heapifying(Insertion in Heap) an Element
+  # After inserting an element into heap, it may not satisfy the heap property. In that case we need to adjust the
+  # locations of the heap to make it heap again. This process is called heapifying.
+  # we have to find the maximum of its children and swap it with the current element and continue this process
+  # until the heap property is satisfied at every node.
+  # Heaping the element at location i
+  def percolate_down(i)
+    return @array if (left_child(i) == -1) && (right_child(i) == -1)
+    left, right = left_child(i), right_child(i)
+    max = ((left != -1) && (@array[left] > @array[i])) ? left : i
+    max = right if ((right != -1) && (@array[right] > @array[max]))
+    @array[max], @array[i] = @array[i], @array[max] if max != i
+    percolate_down(max)
+  end
+
+  # Deleting an Element
+  # To delete an element from heap, we just need to delete the element from the root. This is the only operation
+  # (maximum element) supported by standard heap. After deleting the root element, copy the last element of the
+  # heap (tree) and delete that last element.
+  # After replacing the last element, the tree may not satisfy the heap property. To make it heap again, call the
+  # PercolateDown function.
+  def delete_max
+    return -1 if @count == 0
+    data = @array[0]
+    @array[0] = @array.pop
+    @count = @array.size
+    percolate_down(0)
+    data
+  end
+
+  # Inserting an Element
+  # Insertion of an element is similar to the heapify and deletion process -
+  # 1 Increase the heap size
+  # 2 Keep the new element at the end of the heap (tree)
+  # 3 Heapify the element from bottom to top (root)
+  def insert(data)
+    
+  end
+end
