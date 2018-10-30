@@ -106,17 +106,35 @@ class Heap
     @array
   end
 
+  # Destroy a heap
   def destroy_heap
     @array = nil
     @count = 0
   end
 
+  # Build a heap from a random array
+  # Leaf nodes always satisfy the heap property and do not need to care for them. The leaf elements are always at the
+  # end and to heapify the given array it should be enough if we heapify the non-leaf nodes. Now let us concentrate on
+  # finding the first non-leaf node. The last element of the heap is at location h → count – 1, and to find the first
+  # non-leaf node it is enough to find the parent of the last element.
   def build_heap(array)
     @array = array
     last = @array.size - 1
     ((last - 1)/2).downto(0).each do |i|
       percolate_down(i)
     end
-    @array
+    self
+  end
+
+  # One main application of heap ADT is sorting (heap sort). The heap sort algorithm inserts all elements
+  # (from an unsorted array) into a heap, then removes them from the root of a heap until the heap is empty.
+  def heap_sort(array)
+    @array = array
+    heap = build_heap(@array)
+    sorted = []
+    (0..(@array.size - 1)).each do |i|
+      sorted << heap.delete_max
+    end
+    sorted
   end
 end
