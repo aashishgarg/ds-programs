@@ -38,14 +38,14 @@ class Heap
   # left child location - (2 * i + 1)
   def left_child(parent_index)
     left = 2 * parent_index + 1
-    return -1 if left > @count
+    return -1 if left > (@array.size - 1)
     left
   end
 
   # right child location - (2 * i + 2)
   def right_child(parent_index)
     right = 2 * parent_index + 2
-    return -1 if right > @count
+    return -1 if right > (@array.size - 1)
     right
   end
 
@@ -63,12 +63,17 @@ class Heap
   # until the heap property is satisfied at every node.
   # Heaping the element at location i
   def percolate_down(i)
-    return @array if (left_child(i) == -1) && (right_child(i) == -1)
+    sorted = false
     left, right = left_child(i), right_child(i)
     max = ((left != -1) && (@array[left] > @array[i])) ? left : i
     max = right if ((right != -1) && (@array[right] > @array[max]))
-    @array[max], @array[i] = @array[i], @array[max] if max != i
-    percolate_down(max)
+    if max == i
+      sorted = true
+    else
+      @array[max], @array[i] = @array[i], @array[max]
+    end
+    percolate_down(max) if (sorted == false) && (i >= 0)
+    @array
   end
 
   # Deleting an Element
@@ -92,6 +97,26 @@ class Heap
   # 2 Keep the new element at the end of the heap (tree)
   # 3 Heapify the element from bottom to top (root)
   def insert(data)
-    
+    @array << data
+    i = @array.size - 1
+    while (i >= 0) && (data > @array[(i -1)/2])
+      @array[(i -1)/2], @array[i] = @array[i], @array[(i -1)/2]
+      i = parent(i)
+    end
+    @array
+  end
+
+  def destroy_heap
+    @array = nil
+    @count = 0
+  end
+
+  def build_heap(array)
+    @array = array
+    last = @array.size - 1
+    ((last - 1)/2).downto(0).each do |i|
+      percolate_down(i)
+    end
+    @array
   end
 end
