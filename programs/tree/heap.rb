@@ -1,7 +1,12 @@
-#                 ________________
+#                     ________________
 # Example Max Heap - |17|13|6|1|4|2|5|
-#                -----------------
+#                    -----------------
 # Heap is a complete binary tree where all leaf nodes are at height h or h-1.
+# Max no. of elements - This is because, to get maximum nodes, we need to fill all the h levels completely and the
+#                       maximum number of nodes is nothing but the sum of all nodes at all h levels [2**(h+1) – 1].
+# Min no. of elements - To get minimum nodes, we should fill the h – 1 levels fully and the last level with only one
+#                       element. Hence minimum number of nodes is nothing but the sum of all nodes
+#                       from h – 1 levels plus 1 => [(2**h)].
 class Heap
   attr_accessor :heap_type, :count, :capacity, :array
 
